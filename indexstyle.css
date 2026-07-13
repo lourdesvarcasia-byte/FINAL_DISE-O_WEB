@@ -246,12 +246,13 @@ em {
 /* --- GRID PRINCIPAL --- */
 .grid-principal {
     display: grid;
-    grid-template-columns: 280px 1fr 280px; 
-    gap: 64px; 
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 40px;
-    align-items: start; 
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    margin-top: 40px;
+    padding: 0 40px;
+    max-width: 1300px;        
+    margin-left: auto;       
+    margin-right: auto;      
 }
 
 .contenido {
@@ -681,7 +682,6 @@ Ul.H3 {
 
 @media screen and (max-width: 1024px) {
     .menu-toggle {
-        display: block;
         background-color: #141619;
         color: #c5f200;
         border: 1px solid #c5f200;
@@ -694,18 +694,7 @@ Ul.H3 {
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
- .foto-autor {
-        display: none; 
-    }
-    .nav-medieval ul.nav-links {
-        display: none; 
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-        margin-top: 20px;
-        padding: 0;
-        width: 100%;
-    }
+}
 
     .nav-medieval ul.nav-links.active {
         display: flex;
