@@ -81,7 +81,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Ajuste para pantallas pequeñas (móviles) */
+/* Ajuste para pantallas pequeñas (celus) */
 @media (max-width: 768px) {
     .cabecera-medieval h1 {
         font-size: 2.2rem;       
