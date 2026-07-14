@@ -414,14 +414,20 @@ Ul.H3 {
     background-color: #1DB954;
     color: white;
     padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: 6px; 
     text-decoration: none;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     margin-top: 16px;
     font-size: 0.8rem;
     letter-spacing: 0.02em;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto rebote (elastic) */
+}
+
+.boton-spotify:hover {
+    background-color: #1ed760;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(29, 185, 84, 0.4);
 }
 
 .boton-spotify:hover {
@@ -518,6 +524,30 @@ Ul.H3 {
     letter-spacing: 0.05em;
     margin-bottom: 8px;
 }
+/* --- PULSO DE LUZ PARA LAS FECHAS --- */
+.fecha-hito {
+    display: inline-block;
+    color: #c5f200;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    
+    /* Pequeña sombra de texto inicial */
+    text-shadow: 0 0 4px rgba(197, 242, 0, 0.2);
+    animation: pulsoFecha 2.5s infinite ease-in-out;
+}
+
+@keyframes pulsoFecha {
+    0%, 100% {
+        text-shadow: 0 0 4px rgba(197, 242, 0, 0.2);
+    }
+    50% {
+        text-shadow: 0 0 12px rgba(197, 242, 0, 0.7), 0 0 20px rgba(197, 242, 0, 0.4);
+    }
+}
 
 .bloque-hito h3 {
     margin-top: 0;
@@ -611,10 +641,34 @@ Ul.H3 {
 
 /* Días con evento asignado */
 .tabla-calendario .dia-evento {
-    background-color: rgba(197, 242, 0, 0.15);
-    color: #c5f200;
+   background-color: rgba(197, 242, 0, 0.15); 
+    color: #c5f200; 
     font-weight: 600;
     border: 1px solid rgba(197, 242, 0, 0.3);
+    position: relative;
+    
+    /* Animación de latido en el borde */
+    animation: latidoBordeDia 2s infinite ease-in-out;
+    cursor: pointer;
+}
+
+@keyframes latidoBordeDia {
+    0%, 100% {
+        border-color: rgba(197, 242, 0, 0.3);
+        box-shadow: inset 0 0 0px rgba(197, 242, 0, 0);
+    }
+    50% {
+        border-color: rgba(197, 242, 0, 0.8);
+        box-shadow: inset 0 0 6px rgba(197, 242, 0, 0.2), 0 0 8px rgba(197, 242, 0, 0.3);
+    }
+}
+
+/* Y si pasan el cursor por encima del día de calendario... */
+.tabla-calendario .dia-evento:hover {
+    background-color: #c5f200;
+    color: #0b0c0e;
+    transform: scale(1.1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Leyenda del calendario */
@@ -694,11 +748,11 @@ Ul.H3 {
 
 @media screen and (min-width: 391px) and (max-width: 1024px) {
 
-    .menu-toggle {    
-      
-        margin: 0px 0px 0px 48px!important;
+    .menu-toggle {
+
+        margin: 0px 0px 0px 48px !important;
+    }
 }
-} 
 
 @media screen and (max-width: 1024px) {
     .menu-toggle {
@@ -825,70 +879,6 @@ Ul.H3 {
    RESPONSIVE — MACBOOK PRO (1025px a 1440px)
    ============================================================ */
 
-/* @media screen and (min-width: 1025px) and (max-width: 1440px) {
-
-    body {
-        font-size: 1.1rem;
-    }
-
-    .grid-principal {
-        display: flex;
-        flex-direction: column;
-        gap: 45px;
-        padding: 0 40px;
-        margin: 40px auto;
-        width: 100%;
-        max-width: 900px;
-        box-sizing: border-box;
-    }
-
-    .grid-principal .contenido {
-        order: 1;
-        width: 100%;
-    }
-
-    .grid-principal .columna-izquierda {
-        order: 2;
-        width: 100%;
-    }
-
-    .grid-principal .columna-derecha {
-        order: 3;
-        width: 100%;
-    }
-
-    .grid-agenda {
-        display: flex;
-        flex-direction: column;
-        gap: 45px;
-        padding: 0 40px;
-        margin: 40px auto;
-        width: 100%;
-        max-width: 900px;
-        box-sizing: border-box;
-    }
-
-    .grid-agenda .contenido { order: 1; }
-    .grid-agenda .sidebar { order: 2; }
-
-    .foto-autor {
-        display: none;
-    }
-
-    .tabla-calendario {
-        width: 100%;
-        max-width: 350px;
-        margin: 15px auto;
-        border-spacing: 5px;
-        font-size: 0.85rem;
-    }
-
-    .input-sidebar {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-} */
-
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
 
     body {
@@ -961,89 +951,129 @@ Ul.H3 {
     }
 }
 
-/* ==========================================================================
+/* =============================================================================
    FINAL: ANIMACIONES. 
    ========================================================================== */
-@keyframes aparicionSuave {
-    from {
+/* 1. Animación de entrada */
+@keyframes aparicionLlamativa {
+    0% {
         opacity: 0;
-        transform: scale(0.98);
+        transform: translateY(30px) scale(0.97);
+        filter: blur(4px);
     }
-
-    to {
+    100% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
-/* PARA HTML */
+/* 2. Animación de parpadeo" para el punto neón del título */
+@keyframes latidoNeon {
+    0%, 100% {
+        text-shadow: 0 0 4px rgba(197, 242, 0, 0.4), 0 0 12px rgba(197, 242, 0, 0.2);
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(197, 242, 0, 0.9), 0 0 30px rgba(197, 242, 0, 0.6);
+        color: #e5ff5e;
+        opacity: 0.85;
+    }
+}
+
+/* como un latido al punto final del título */
+.cabecera-medieval h1::after {
+    display: inline-block;
+    animation: latidoNeon 3s infinite ease-in-out;
+}
+
+/* animar la entrada de los elementos principales */
 .animar-entrada {
-    animation: aparicionSuave 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* (Efecto cascada progresivo, CLASE 13) */
-.linea-tiempo-agenda .bloque-hito:nth-child(1) {
-    animation-delay: 0.1s;
+/* Efecto de cascada progresiva (delays) */
+.linea-tiempo-agenda .bloque-hito:nth-child(1) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.1s; }
+.linea-tiempo-agenda .bloque-hito:nth-child(2) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.25s; }
+.linea-tiempo-agenda .bloque-hito:nth-child(3) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.4s; }
+
+.linea-tiempo .bloque-hito:nth-child(1) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.1s; }
+.linea-tiempo .bloque-hito:nth-child(2) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.25s; }
+.linea-tiempo .bloque-hito:nth-child(3) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.4s; }
+
+.sidebar .contenedor-info:nth-child(1) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.25s; }
+.sidebar .contenedor-info:nth-child(2) { animation: aparicionLlamativa 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 0.4s; }
+
+
+/* --- TRANSICIONES Y HOVERSSS --- */
+
+/* Suavidad */
+.bloque-hito, .contenedor-info, .item-galeria, .boton-medieval-full, .boton-spotify, .enlace-monasterio img, #foto-caballeros, #foto-bosque-medieval {
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.linea-tiempo-agenda .bloque-hito:nth-child(2) {
-    animation-delay: 0.25s;
+/* Efecto hover */
+.bloque-hito:hover, .contenedor-info:hover {
+    background-color: rgba(20, 22, 25, 0.95);
+    border-color: #c5f200; 
+    transform: translateY(-6px) scale(1.01); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(197, 242, 0, 0.05);
 }
 
-.linea-tiempo-agenda .bloque-hito:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-.linea-tiempo .bloque-hito:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.linea-tiempo .bloque-hito:nth-child(2) {
-    animation-delay: 0.25s;
-}
-
-.linea-tiempo .bloque-hito:nth-child(3) {
-    animation-delay: 0.4s;
-}
-
-
-.sidebar .contenedor-info:nth-child(1) {
-    animation-delay: 0.2s;
-}
-
-.sidebar .contenedor-info:nth-child(2) {
-    animation-delay: 0.35s;
-}
-
-
-/* Efecto Hover para imágenes*/
+/* Hover de Imágenes de la barra lateral */
 .sidebar .contenedor-info img {
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
-    filter: grayscale(30%);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    filter: grayscale(40%);
 }
 
 .sidebar .contenedor-info:hover img {
-    transform: scale(1.03) rotate(1deg);
+    transform: scale(1.04) rotate(-0.5deg);
     filter: grayscale(0%);
 }
 
-/* Efecto de iluminación al pasar el mouse */
-.bloque-hito,
-.contenedor-info {
-    transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+
+/* --- BOTÓN DE FORMULARIO --- */
+.boton-medieval-full {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.bloque-hito:hover,
-.contenedor-info:hover {
-    background-color: rgba(255, 255, 255, 0.03);
-    /* aclarar el fondo un poco */
-    border-color: rgba(197, 242, 0, 0.4);
-    /* El borde neón se enciende un poco */
+/* Efecto de brillo al pasar el cursor por el botón */
+.boton-medieval-full::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.boton-medieval-full:hover::before {
+    left: 100%;
+}
+
+.boton-medieval-full:hover {
+    background-color: #c5f200;
+    color: #0b0c0e;
     transform: translateY(-2px);
-    /* Flota un poquito de forma elegante */
+    box-shadow: 0 6px 20px rgba(197, 242, 0, 0.3);
 }
 
-/*. Efecto de "Línea expansiva" los enlaces del menú */
+.boton-medieval-full:active {
+    transform: translateY(1px);
+}
+
+
+/* --- ENLACES DEL MENÚ CON EFECTO REVELADO DE LÍNEA --- */
 .nav-medieval ul.nav-links a {
     position: relative;
     transition: color 0.3s ease;
@@ -1059,8 +1089,7 @@ Ul.H3 {
     left: 0;
     background-color: #c5f200;
     transform-origin: bottom right;
-    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-    /* Curva fluida */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-medieval ul.nav-links a:hover::after {
@@ -1068,18 +1097,14 @@ Ul.H3 {
     transform-origin: bottom left;
 }
 
-
-/*. Efecto de foco para inputs */
+/* --- EFECTO DE FOCO EN INPUTS --- */
 .input-sidebar {
-    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .input-sidebar:focus {
     outline: none;
     background-color: rgba(255, 255, 255, 0.02);
-    /* Se aclara */
     border-color: #c5f200;
-    /* El borde se ilumina */
-    box-shadow: 0 0 8px rgba(197, 242, 0, 0.2);
-    /* Brillo muy suave */
+    box-shadow: 0 0 12px rgba(197, 242, 0, 0.25);
 }
